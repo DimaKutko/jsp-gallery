@@ -4,16 +4,29 @@
     String fromServlet = (String) request.getAttribute("fromServlet");
     User user = (User) request.getAttribute("user");
 %>
-<div>
+<div style="margin-top: 20px">
     <% if (user != null) { %>
-    <form action="" method="post" enctype="multipart/form-data">
-        <label>Picture <input type="file" name="picture"></label>
-        <br/>
-        <label>Description<input type="text" name="description"></label>
-        <br/>
-        <button>Upload</button>
-    </form>
+    <div class="card" style="margin-top: 20px;">
+        <div class="card-header">
+            Upload your new picture
+        </div>
+        <div class="card-body">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">New picture</label>
+                    <input name="picture" type="file" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <input name="description" type="text" class="form-control" aria-label="Description">
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
     <% } else { %>
-    <pre>Only authorized users can add pictures</pre>
+    <div class="alert alert-primary" role="alert">
+        Only authorized users can add pictures
+    </div>
     <% } %>
 </div>
