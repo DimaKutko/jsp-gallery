@@ -3,6 +3,9 @@ package com.example.filters;
 import com.example.dao.UserDao;
 import com.example.orm.AuthData;
 import com.example.orm.User;
+import com.example.services.RndService;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -12,18 +15,25 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 
+@Singleton
 public class AuthFilter implements Filter {
 
     private static final String _authData = "authData";
-    private long MAX_LOGIN_TIME;
+    private long MAX_LOGIN_TIME = 30000;
+
+    @Inject
+    RndService rnd;
 
     @Override
     public void init(FilterConfig filterConfig) {
-        this.MAX_LOGIN_TIME = Long.parseLong(filterConfig.getInitParameter("MAX_LOGIN_TIME"));
+//        this.MAX_LOGIN_TIME = Long.parseLong(filterConfig.getInitParameter("MAX_LOGIN_TIME"));
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException, IOException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException, IOException {
+        servletRequest.setAttribute("rnd2", rnd.num);
+
         UserDao userDao = (UserDao) servletRequest.getAttribute("userDao");
 
         if (userDao == null) {

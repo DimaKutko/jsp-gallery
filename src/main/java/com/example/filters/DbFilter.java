@@ -2,14 +2,25 @@ package com.example.filters;
 
 import com.example.dao.PictureDao;
 import com.example.dao.UserDao;
+import com.example.services.DbConnector;
+import com.example.services.RndService;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import javax.servlet.*;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+@Singleton
 public class DbFilter implements Filter {
     FilterConfig filterConfig;
+
+    @Inject
+    DbConnector connector;
+
+    @Inject
+    RndService rnd;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -21,21 +32,16 @@ public class DbFilter implements Filter {
         Connection connection;
 
         try {
-            String connectionString = "jdbc:mysql://localhost:3306/gallery"
-                    + "?useUnicode=true&characterEncoding=UTF-8"
-                    + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            servletRequest.setAttribute("rnd1", rnd.num);
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(connectionString, "gallery_user", "gallery_password");
+            //Grt connection
+            connection = connector.getConnection();
 
             //Temporary GetIt
             servletRequest.setAttribute("userDao", new UserDao(connection));
             servletRequest.setAttribute("pictureDao", new PictureDao(connection));
 
             filterChain.doFilter(servletRequest, servletResponse);
-
-            //After works filters
-            connection.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             servletRequest.getRequestDispatcher("static.html")
