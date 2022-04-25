@@ -1,4 +1,4 @@
-<%@ page import="step.example.orm.User" %>
+<%@ page import="com.example.orm.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String fromServlet = (String) request.getAttribute("fromServlet");

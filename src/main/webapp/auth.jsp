@@ -1,5 +1,4 @@
-<%@ page import="step.example.orm.AuthData" %>
-<%@ page import="step.example.orm.User" %>
+<%@ page import="com.example.orm.User" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     User user = (User) request.getAttribute("user");
