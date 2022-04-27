@@ -11,9 +11,9 @@
     <jsp:include page="auth.jsp"/>
     <jsp:include page="admin.jsp"/>
 
-    <%= request.getAttribute("rnd1")%><br/>
-    <%= request.getAttribute("rnd2")%><br/>
-    <%= request.getAttribute("rnd3")%><br/>
+    <%--    <%= request.getAttribute("rnd1")%><br/>--%>
+    <%--    <%= request.getAttribute("rnd2")%><br/>--%>
+    <%--    <%= request.getAttribute("rnd3")%><br/>--%>
 </div>
 </body>
 </html>

@@ -1,23 +1,29 @@
 package com.example.dao;
 
 import com.example.orm.Picture;
+import com.example.services.DbConnector;
+import com.example.services.Hasher;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 //Data access for Gallery table
+@Singleton
 public class PictureDao {
-    private Connection con;
+    private Connection connector;
 
-    public PictureDao(Connection con) {
-        this.con = con;
+    @Inject
+    public PictureDao(DbConnector connector, Hasher hasher) {
+        this.connector = connector.getConnection();
     }
 
     public ArrayList<Picture> getPicturesList() {
         ArrayList<Picture> ret = new ArrayList<>();
 
 
-        try (Statement ps = con.createStatement()) {
+        try (Statement ps = connector.createStatement()) {
 
             String query = "SELECT * FROM Gallery";
 
@@ -38,7 +44,7 @@ public class PictureDao {
         String query = "INSERT INTO Gallery(id, description, picture, user_id, moment, deleted)" +
                 "VALUES(UUID(), ?, ?, ?, CURRENT_TIMESTAMP, NULL)";
 
-        try (PreparedStatement ps = con.prepareStatement(query)) {
+        try (PreparedStatement ps = connector.prepareStatement(query)) {
             ps.setString(1, picture.getDescription());
             ps.setString(2, picture.getPicture());
             ps.setString(3, picture.getUserId());

@@ -30,6 +30,12 @@ public class Picture {
         this.deleted = deleted;
     }
 
+    public Picture(String description, String picture, String userId) {
+        this.description = description;
+        this.picture = picture;
+        this.userId = userId;
+    }
+
     public String getId() {
         return id;
     }

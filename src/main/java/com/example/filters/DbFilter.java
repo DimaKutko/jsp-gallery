@@ -10,17 +10,18 @@ import com.google.inject.Singleton;
 import javax.servlet.*;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 @Singleton
 public class DbFilter implements Filter {
     FilterConfig filterConfig;
-
     @Inject
     DbConnector connector;
-
     @Inject
     RndService rnd;
+    @Inject
+    UserDao userDao;
+    @Inject
+    PictureDao pictureDao;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,6 +30,10 @@ public class DbFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        //Set encoding
+        servletRequest.setCharacterEncoding("UTF-8");
+        servletResponse.setCharacterEncoding("UTF-8");
+
         Connection connection;
 
         try {
@@ -37,13 +42,15 @@ public class DbFilter implements Filter {
             //Grt connection
             connection = connector.getConnection();
 
+            if (connection == null) throw new Exception("DBConnection is null");
+
             //Temporary GetIt
-            servletRequest.setAttribute("userDao", new UserDao(connection));
-            servletRequest.setAttribute("pictureDao", new PictureDao(connection));
+            servletRequest.setAttribute("userDao", userDao);
+            servletRequest.setAttribute("pictureDao", pictureDao);
 
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("DbFilter error: " + ex.getMessage());
             servletRequest.getRequestDispatcher("static.html")
                     .forward(servletRequest, servletResponse);
         }

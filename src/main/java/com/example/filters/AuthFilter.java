@@ -38,7 +38,7 @@ public class AuthFilter implements Filter {
 
         if (userDao == null) {
             throw new ServletException("AuthFilter: Auth UserDao is null");
-        }
+        };
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;

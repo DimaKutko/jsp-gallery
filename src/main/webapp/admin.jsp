@@ -17,14 +17,14 @@
             Upload your new picture
         </div>
         <div class="card-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="AddPicture" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label">New picture</label>
                     <input name="picture" type="file" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Description</label>
-                    <input name="description" type="text" class="form-control" aria-label="Description">
+                    <textarea name="description" class="form-control" aria-label="Description"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Upload</button>
             </form>
