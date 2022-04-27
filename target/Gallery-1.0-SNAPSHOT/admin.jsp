@@ -5,12 +5,12 @@
     User user = (User) request.getAttribute("user");
 %>
 <div style="margin-top: 20px">
-        <% if (user == null) { %>
+    <% if (user == null) { %>
     <%-- Not authed user --%>
     <div class="alert alert-primary" role="alert">
         Only authorized users can add pictures
     </div>
-        <% } else { %>
+    <% } else { %>
     <%-- Authed user --%>
     <div class="card" style="margin-top: 20px;">
         <div class="card-header">
@@ -30,5 +30,5 @@
             </form>
         </div>
     </div>
-                            <% } %>
-                        </div>
+    <% } %>
+</div>

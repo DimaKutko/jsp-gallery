@@ -25,9 +25,7 @@ public class AuthFilter implements Filter {
     RndService rnd;
 
     @Override
-    public void init(FilterConfig filterConfig) {
-//        this.MAX_LOGIN_TIME = Long.parseLong(filterConfig.getInitParameter("MAX_LOGIN_TIME"));
-    }
+    public void init(FilterConfig filterConfig) {}
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)

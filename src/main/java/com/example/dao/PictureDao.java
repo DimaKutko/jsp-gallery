@@ -23,11 +23,31 @@ public class PictureDao {
         ArrayList<Picture> ret = new ArrayList<>();
 
 
-        try (Statement ps = connector.createStatement()) {
+        try (Statement cs = connector.createStatement()) {
 
             String query = "SELECT * FROM Gallery";
 
-            try (ResultSet res = ps.executeQuery(query)) {
+            try (ResultSet res = cs.executeQuery(query)) {
+                while (res.next()) {
+                    ret.add(new Picture(res));
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error getPicturesList: " + ex.getMessage());
+        }
+
+        return ret;
+    }
+
+    public ArrayList<Picture> getPicturesListByUserUID(String userUID) {
+        ArrayList<Picture> ret = new ArrayList<>();
+
+        String query = "SELECT * FROM Gallery WHERE user_id = ?";
+
+        try (PreparedStatement ps = connector.prepareStatement(query)) {
+            ps.setString(1, userUID);
+
+            try (ResultSet res = ps.executeQuery()) {
                 while (res.next()) {
                     ret.add(new Picture(res));
                 }
