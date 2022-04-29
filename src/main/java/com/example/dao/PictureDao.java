@@ -50,6 +50,21 @@ public class PictureDao {
         return false;
     }
 
+    public boolean updatePictureById(Picture picture) {
+        String query = "UPDATE Gallery SET description = ? WHERE id = ?";
+
+        try (PreparedStatement ps = connector.prepareStatement(query)) {
+            ps.setString(1, picture.getDescription());
+            ps.setString(2, picture.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Error getPicturesList: " + ex.getMessage());
+        }
+
+        return false;
+    }
+
     public ArrayList<Picture> getPicturesList() {
         ArrayList<Picture> ret = new ArrayList<>();
         try (Statement cs = connector.createStatement()) {

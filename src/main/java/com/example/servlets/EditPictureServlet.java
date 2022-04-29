@@ -41,7 +41,10 @@ public class EditPictureServlet extends HttpServlet {
 
             //Update
             if (request.getParameter("update") != null) {
-                System.out.println("Update");
+                pic.setDescription(request.getParameter("description"));
+                if (!pictureDao.updatePictureById(pic)) throw new Exception("Picture update error");
+
+                session.setAttribute("message", "Successful update");
             }
         } catch (Exception ex) {
             System.out.println("EditPictureServlet error: " + ex.getMessage());
