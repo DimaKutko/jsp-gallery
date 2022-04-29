@@ -3,6 +3,7 @@ package com.example.ioc;
 import com.example.filters.AuthFilter;
 import com.example.filters.DbFilter;
 import com.example.servlets.AddPictureServlet;
+import com.example.servlets.EditPictureServlet;
 import com.example.servlets.GetPictureServlet;
 import com.example.servlets.HomeServlet;
 import com.google.inject.Guice;
@@ -27,6 +28,7 @@ public class Startup extends GuiceServletContextListener {
                         serve("/").with(HomeServlet.class);
                         serve("/AddPicture").with(AddPictureServlet.class);
                         serve("/GetPicture/*").with(GetPictureServlet.class);
+                        serve("/EditPicture").with(EditPictureServlet.class);
                     }
                 }, new RegisterServices()
         );

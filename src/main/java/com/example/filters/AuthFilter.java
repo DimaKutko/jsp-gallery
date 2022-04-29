@@ -19,24 +19,24 @@ import java.util.Locale;
 public class AuthFilter implements Filter {
 
     private static final String _authData = "authData";
-    private long MAX_LOGIN_TIME = 30000;
+    private long MAX_LOGIN_TIME = 300000;
 
     @Inject
     RndService rnd;
 
     @Override
-    public void init(FilterConfig filterConfig) {}
+    public void init(FilterConfig filterConfig) {
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException, IOException {
-        servletRequest.setAttribute("rnd2", rnd.num);
 
         UserDao userDao = (UserDao) servletRequest.getAttribute("userDao");
 
         if (userDao == null) {
             throw new ServletException("AuthFilter: Auth UserDao is null");
-        };
+        }
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -47,7 +47,6 @@ public class AuthFilter implements Filter {
             String userLogin = request.getParameter("userLogin");
             String userPass = request.getParameter("userPass");
             String logout = request.getParameter("logout");
-
 
             if (logout != null) {
                 // Log Out method

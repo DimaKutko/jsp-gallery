@@ -19,14 +19,41 @@ public class PictureDao {
         this.connector = connector.getConnection();
     }
 
+    public Picture getPictureById(String id) {
+        if (id == null) return null;
+
+        String query = "SELECT * FROM Gallery WHERE id = ?";
+        try (PreparedStatement ps = connector.prepareStatement(query)) {
+            ps.setString(1, id);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                return new Picture(res);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error getPicturesList: " + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    public boolean deletePictureById(String id) {
+        String query = "UPDATE Gallery SET deleted = CURRENT_TIMESTAMP WHERE id = ?";
+
+        try (PreparedStatement ps = connector.prepareStatement(query)) {
+            ps.setString(1, id);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Error getPicturesList: " + ex.getMessage());
+        }
+
+        return false;
+    }
+
     public ArrayList<Picture> getPicturesList() {
         ArrayList<Picture> ret = new ArrayList<>();
-
-
         try (Statement cs = connector.createStatement()) {
-
             String query = "SELECT * FROM Gallery";
-
             try (ResultSet res = cs.executeQuery(query)) {
                 while (res.next()) {
                     ret.add(new Picture(res));
@@ -35,7 +62,6 @@ public class PictureDao {
         } catch (SQLException ex) {
             System.out.println("Error getPicturesList: " + ex.getMessage());
         }
-
         return ret;
     }
 

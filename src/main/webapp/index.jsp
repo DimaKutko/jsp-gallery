@@ -1,4 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%
+    String error = (String) request.getAttribute("error");
+    String message = (String) request.getAttribute("message");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +12,16 @@
 </head>
 <body>
 <div class="container">
+    <% if (message != null) {%>
+    <div class="alert alert-success" role="alert" style="margin-top: 20px">
+        <%=message%>
+    </div>
+    <% }%>
+    <% if (error != null) {%>
+    <div class="alert alert-danger" role="alert" style="margin-top: 20px">
+        <%=error%>
+    </div>
+    <% }%>
     <jsp:include page="auth.jsp"/>
     <jsp:include page="admin.jsp"/>
     <jsp:include page="pictures.jsp"/>

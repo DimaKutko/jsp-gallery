@@ -16,17 +16,15 @@
             <div class="row g-3">
                 <div class="col mb-3">
                     <input name="userLogin" type="text"
-                           class="form-control <% if(error != null) {%> <%= "is-invalid" %> <% }%>" placeholder="Login"
+                           class="form-control" placeholder="Login"
                            aria-label="Login"
                            style="margin-bottom: 0"
                            required>
-                    <div class="invalid-feedback"><%=error%>
-                    </div>
                 </div>
                 <div class="col">
                     <input name="userPass" type="password"
                            style="margin-bottom: 0"
-                           class="form-control <% if(error != null) {%> <%= "is-invalid" %> <% }%>"
+                           class="form-control"
                            placeholder="Password"
                            aria-label="Password" required>
                 </div>
